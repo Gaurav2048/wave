@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
+import Header from '../Components/Header_Footer/Header/index';
+import Footer from '../Components/Header_Footer/Footer/index'; 
 
 export default class Layout extends Component {
   render() {
     return (
       <div>
-        Hader
+        <Header/>
         <div className="page_container">
           {this.props.children}
         </div>
-        Footer
+        <Footer/>
       </div>
     )
   }
