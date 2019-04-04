@@ -11,6 +11,12 @@ export const Validate = (element, formData =[]) =>{
         error = !valid ? [valid, message] : error; 
     }
 
+    if(element.validation.confirm){
+        const valid = element.value.trim() === formData[element.validation.confirm].value  ; 
+        const message = `${!valid? 'Must be the same password ' : ''}`; 
+        error = !valid ? [valid, message] : error; 
+    }
+
     if(element.validation.required){
             const valid = element.value.trim() !== ''; 
             const message = `${!valid? 'This field is required' : ''}`; 
@@ -52,8 +58,9 @@ export const Update = (element, formdata, fromName) =>{
 export const generateData = (formData, formName) => {
     let dataToSubmit = {}; 
     for(let key in formData){
+        if(key !== 'cnfirmPassword'){
             dataToSubmit [key] =formData[key].value; 
-
+        }
     }
 
     return dataToSubmit; 
