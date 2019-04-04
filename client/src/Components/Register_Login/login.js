@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect } from 'react-redux';
 import FormField from '../../utils/Form/FormField'; 
-
+import {Update } from '../../utils/Form/FormAction'; 
 
  class Login extends Component {
 
@@ -18,8 +18,8 @@ import FormField from '../../utils/Form/FormField';
                     placeholder:'Enter your email'
                 },
                 validation: {
-                    required: true,
-                    email: true
+                    required: true, 
+                    email:true
                 },
                 valid: false,
                 touched: false, 
@@ -43,8 +43,10 @@ import FormField from '../../utils/Form/FormField';
         }
     }
 
-    updateForm = () => {
-
+    updateForm = (element) => {
+            const newFormdata = Update(element, this.state.formData,'login');
+            this.setState({formError: false, formData: newFormdata})
+            
     }
 
     submitForm =() =>{
@@ -56,6 +58,7 @@ import FormField from '../../utils/Form/FormField';
       <div className="signin_wrapper">
             <form onSubmit={(event)=>this.submitForm(event)}>
                 <FormField  id={'email'}  formdata = {this.state.formData.email} change ={(element) => this.updateForm(element)}/>
+                <FormField  id={'password'}  formdata = {this.state.formData.password} change ={(element) => this.updateForm(element)}/>
             </form>
       </div>
     )
