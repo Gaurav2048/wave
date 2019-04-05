@@ -92,7 +92,7 @@ app.post('/api/product/article', auth, admin, (req,res)=>{
 app.post('/api/product/wood',auth,admin, (req,res)=>{
 
     const wood = new Wood(req.body); 
-    wood.save((err, doc) =>{
+    Wood.save((err, doc) =>{
         if(err) return res.json({success: false, err})
         res.status(200).json({
             success: true,
@@ -103,7 +103,7 @@ app.post('/api/product/wood',auth,admin, (req,res)=>{
 })
 
 app.get('/api/product/woods',(req,res)=>{
-    wood.find({}, (err, woods)=>{
+    Wood.find({}, (err, woods)=>{
         if(err) return res.status(400).send(err); 
         res.status(200).send(woods);
     })
@@ -122,7 +122,7 @@ app.post('/api/products/brand', auth,admin,(req,res)=>{
 })
 
 
-app.get('/api/products/get_brands', (req,res)=>{
+app.get('/api/product/get_brands', (req,res)=>{
     Brand.find({},(err,brands)=>{
         if(err) return res.status(400).send(err);
         res.status(200).send(brands);
