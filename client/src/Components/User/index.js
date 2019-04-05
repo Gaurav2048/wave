@@ -3,16 +3,16 @@ import UserLayout from '../../HOC/User';
 import MyButton from '../../utils/Button'; 
 
 
-const UserDashboard = () =>{
+const UserDashboard = ({user}) =>{
     return (
         <div >  
             <UserLayout >
                 <div className="user_nfo_panel">
                         <h1>User Information</h1>
                         <div>
-                            <span>name</span>
-                            <span>Last name</span>
-                            <span>Email</span>
+                            <span>{user.userData.name}</span>
+                            <span>{user.userData.lastname}</span>
+                            <span>{user.userData.email}</span>
                         </div>
                         <MyButton type = "default"  title = "Edit account info "  linkTo = "/user/user_profile"/>
                     <div className="user_nfo_panel">
