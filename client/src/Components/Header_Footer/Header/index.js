@@ -49,7 +49,7 @@ import {logoutUser} from '../../../actions/user_action';
         console.log("header", response.payload);
         
       if(response.payload.success){
-        this.props.history.push("/home");
+        this.props.history.push("/");
       }
     })
   }
