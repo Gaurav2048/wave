@@ -66,6 +66,20 @@ export const generateData = (formData, formName) => {
     return dataToSubmit; 
 }
 
+export const  resetField = (formdata, formname) =>{
+        const newFormData = {...formdata};
+
+        for( let key in newFormData ){
+            newFormData[key].value ='';
+            newFormData[key].valid = false; 
+            newFormData[key].validationMessage='';
+
+        }
+
+        return newFormData; 
+
+}
+
 export const isFormValid = (formData, formName) =>{
     let formIsValid = true; 
 
@@ -74,4 +88,16 @@ export const isFormValid = (formData, formName) =>{
     }
 
     return formIsValid; 
+}
+
+
+export function populateoptionFileds(formdata, arrayData=[], field) {
+    const newArray = [];
+    const newFormdata = {...formdata};
+
+    arrayData.forEach(item =>{
+        newArray.push({key: item._id, value: item.name})
+    })
+    newFormdata[field].config.options = newArray; 
+    return newFormdata; 
 }
