@@ -52,7 +52,7 @@ class Shop extends Component {
     }
 
     handleFilters = (filters, category) => {
-        const newFilters = { ... this.state.filters }
+        const newFilters = { ...this.state.filters }
         newFilters[category] = filters;
 
         if (category === "price") {
@@ -91,7 +91,6 @@ class Shop extends Component {
 
     render() {
 
-        const products = this.props.products;
         console.log(this.state.filters);
 
         return (
