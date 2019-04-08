@@ -259,8 +259,8 @@ if(formIsValid){
 
 imageHandler=(images) =>{
   const formData = {...this.state.formdata};
-    formData['image'].value=images;
-    formData['image'].value=true;
+    formData['images'].value=images;
+    formData['images'].valid=true;
 
     this.setState({formdata:formData})
 

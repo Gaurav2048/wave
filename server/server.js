@@ -264,6 +264,14 @@ app.post('/api/users/uploadImage', auth,admin, formidable(),(req,res)=>{
     })
 })
 
+app.get('/api/users/remove/removeImage', auth, admin,(req,res)=>{
+                let image_id = req.query.public_id;
+                cloudinary.uploader.destroy(image_id,(err)=>{
+                            if(err) return res.json({success: false, err})
+                            res.send(200).send('ok')
+                })
+})
+
 
 const port = process.env.PORT||3002;
 
