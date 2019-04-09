@@ -1,6 +1,13 @@
 import axios from 'axios';
 import { PRODUCT_SERVER } from '../utils/misc';
-import { GET_PRODUCT_BYSALE, GET_PRODUCT_BY_ARRIVAL, GET_BRANDS, GET_WOODS , GET_PRODUCT_TO_SHOP,ADD_PRODUCT,CLEAR_PRODUCT} from './types';
+import { GET_PRODUCT_BYSALE,
+     GET_PRODUCT_BY_ARRIVAL,
+     GET_BRANDS,
+     GET_WOODS ,
+     GET_PRODUCT_TO_SHOP,
+     ADD_PRODUCT,
+     CLEAR_PRODUCT,
+     ADD_BRAND} from './types';
 
 
 export function getProductBySale() {
@@ -56,7 +63,6 @@ export function gtProductByArrival() {
         type: GET_PRODUCT_BY_ARRIVAL,
         payload: request
     }
-
 }
 
 
@@ -96,3 +102,26 @@ export function addProduct(dataTOoSubmit){
     }
 }
 
+
+
+//Brnad
+
+
+export function addBrand(dtaToSubmit, existingBrands){
+        const request = axios.post(`${PRODUCT_SERVER}/brand`, dtaToSubmit).then(response => {
+            let brands = [
+                ...existingBrands,
+                response.data.brand
+            ];
+            return {
+                success: response.data.success,
+                brands
+            }
+        })
+
+        return {
+            type: ADD_BRAND,
+            payload:request
+        }
+
+    }
