@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PageTop from '../../utils/page_top';
 import {connect} from 'react-redux';
 import ProductInfo from './prodInfo'; 
+import ProdImg from './ProdImg';
 
 import {getProductDetail,clearProductDetail} from '../../actions/product_actions';
 
@@ -10,7 +11,12 @@ class ProductPage extends Component {
     componentDidMount(){
         const id = this.props.match.params.id; 
         console.log("dds", id);
-        this.props.dispatch(getProductDetail(id))
+        this.props.dispatch(getProductDetail(id)).then(response=>{
+            if(!this.props.products.prodDetail){
+                console.log('no article found');
+                this.props.history.push('/')
+            }
+        })
         
     }
 
@@ -27,7 +33,10 @@ class ProductPage extends Component {
                     this.props.products.prodDetail ?
                         <div className="product_detail_wrapper">
                                 <div className="left">
-                                        images
+                                        <div style={{width:'500px'}}>
+                                            <ProdImg detail={this.props.products.prodDetail}/>
+
+                                        </div>
                                 </div>
                                 <div className="right">
                                     <ProductInfo detail ={this.props.products.prodDetail} addToCart={(id)=>this.addToCArtHandler(id)} />

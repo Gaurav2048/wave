@@ -26,7 +26,7 @@ import Dropzone from 'react-dropzone';
         formdata.append("file", files[0]);
         axios.post('/api/users/uploadImage', formdata, config)
           .then(response => {
-            console.log(response.data);
+            console.log("from server", response.data);
             
             this.setState({uploading: false,  uploadedFiles:[
                 ...this.state.uploadedFiles,
