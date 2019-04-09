@@ -1,4 +1,5 @@
-import { GET_PRODUCT_BYSALE,GET_PRODUCT_BY_ARRIVAL,GET_WOODS, GET_BRANDS, GET_PRODUCT_TO_SHOP,ADD_PRODUCT,CLEAR_PRODUCT, ADD_BRAND } from "../actions/types";
+import { GET_PRODUCT_BYSALE,GET_PRODUCT_BY_ARRIVAL,GET_WOODS, GET_BRANDS, GET_PRODUCT_TO_SHOP,ADD_PRODUCT,CLEAR_PRODUCT, ADD_BRAND, GET_PRODUCT_DETAIL,
+        CLEAR_PRODUCT_DETAIL } from "../actions/types";
 
 export default function(state={}, action){
     switch(action.type){
@@ -21,6 +22,12 @@ export default function(state={}, action){
         case ADD_PRODUCT : 
                 return {...state, product: action.payload}       
                 
+        case GET_PRODUCT_DETAIL : 
+                return {...state, prodDetail: action.payload}
+        
+        case  CLEAR_PRODUCT_DETAIL:
+                return {...state, prodDetail: action.payload}               
+         
         case CLEAR_PRODUCT: 
         return {...state, product:action.payload}        
 

@@ -7,7 +7,10 @@ import { GET_PRODUCT_BYSALE,
      GET_PRODUCT_TO_SHOP,
      ADD_PRODUCT,
      CLEAR_PRODUCT,
-     ADD_BRAND} from './types';
+     ADD_BRAND,
+     GET_PRODUCT_DETAIL,
+     CLEAR_PRODUCT_DETAIL
+    } from './types';
 
 
 export function getProductBySale() {
@@ -55,6 +58,13 @@ export function clearProduct(){
     } 
 }
 
+export function clearProductDetail(){
+    return {
+        type:CLEAR_PRODUCT_DETAIL,
+        payload: ''
+    }
+}
+
 export function gtProductByArrival() {
     const request = axios.get(`${PRODUCT_SERVER}/article?sortBy=createdAt&order=desc&limit=4`)
         .then(response => response.data);
@@ -63,6 +73,19 @@ export function gtProductByArrival() {
         type: GET_PRODUCT_BY_ARRIVAL,
         payload: request
     }
+}
+
+
+export function getProductDetail(id){
+    const request = axios.get(`${PRODUCT_SERVER}/article_by_id/?id=${id}&type=array`)
+                        .then((response)=>{
+                            return response.data[0]
+                        })
+
+                        return {
+                            type: GET_PRODUCT_DETAIL,
+                            payload:request
+                        }
 }
 
 

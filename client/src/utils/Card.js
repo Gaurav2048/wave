@@ -14,7 +14,8 @@ class Card extends Component {
 
     render() {
         const props = this.props;
-
+        console.log(props,"hare");
+        
         return (
             <div className={`card_item_wrapper ${props.grid}`} >
                 <div className="image" style={{ background: `url(${this.renderCardImage(props.images)}) no-repeat` }}>
@@ -38,7 +39,7 @@ class Card extends Component {
 
                     <div className="actions">
                         <div className="button_wrapp">
-                            <MyButton type="default" altClass="card_link" title="View Product" linkTo={`/product_detail/${props}`} addStyles={{ margin: '10px 0 0 0' }} />
+                            <MyButton type="default" altClass="card_link" title="View Product" linkTo={`/product_detail/${props._id}`} addStyles={{ margin: '10px 0 0 0' }} />
 
                         </div>
                         <div className="button_wrapp">
