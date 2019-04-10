@@ -1,7 +1,7 @@
 import axios from 'axios'; 
 
 import {USER_SERVER, PRODUCT_SERVER} from '../utils/misc'; 
-import {LOGIN_USER, REGISTER_USER, AUTH_USER,LOGOUT_USER, ADD_TO_CART_USER,GET_CART_ITEMS_USER, REMOVE_CART_ITEM_USER} from './types';
+import {LOGIN_USER, REGISTER_USER, AUTH_USER,LOGOUT_USER, ADD_TO_CART_USER,GET_CART_ITEMS_USER, REMOVE_CART_ITEM_USER, ONSUCCESS_BUY_USER} from './types';
 
 
 export function loginUser (dataToSubmit){
@@ -100,3 +100,18 @@ export function removeCartAction(id){
                 }          
 
 }       
+
+
+export function onSuccessBuy(data){
+
+    const request = axios.post(`${USER_SERVER}/successBuy`,data)
+                        .then(response =>{
+                           return response.data
+                        })
+
+    return{
+        type:ONSUCCESS_BUY_USER,
+        payload:request
+    }
+
+}

@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 const mongoose = require('mongoose');
+const async = require('async'); 
 
 require('dotenv').config();
 mongoose.Promise = global.Promise;
@@ -29,6 +30,8 @@ const { User } = require('./models/User');
 const { Brand } = require('./models/brands');
 const { Wood } = require('./models/woods');
 const { Product } = require('./models/product');
+const {Payment} = require('./models/payment');
+
 
 
 //Middleware    
@@ -344,6 +347,78 @@ app.get('/api/user/removeFromCart',auth,(req,res) =>{
                 })
         }
     )
+})
+
+
+app.post('/api/user/successBuy', auth, (req, res)=>{
+
+    let history = [];
+    let transactionData =[];
+
+    // user history 
+    req.body.cartDetail.forEach((item)=>{
+        history.push({
+            dateOfPurchase: Date.now(),
+            name:item.name,
+            brand: item.brand.name,
+            id:item._id,
+            price:item.price,
+            quantity:item.quantity,
+            paymentId: req.body.paymentData.paymentID   
+        })
+    })
+
+
+    // payment area
+
+    transactionData.user = {
+        id: req.user._id,
+        name: req.user.name,
+        lastname: req.user.lastname,
+        email:req.user.email
+    }
+
+    transactionData.data = req.body.paymentData;
+    transactionData.product = history;
+
+    User.findOneAndUpdate(
+        {_id: req.user._id},
+        {$push:{history:history},   $set:{cart:[]}  },
+        {new:true},
+        (err, user)=>{
+                if(err) return res.json({success:false, err})
+
+                const payment = new Payment(transactionData);
+                payment.save((err,doc)=>{
+                    if(err) return res.json({success:false, err})
+
+                    let products = [];
+                    doc.product.forEach((item)=>{
+                        products.push({
+                            id:item.id,
+                            quantity:item.quantity
+                        })
+                    })
+
+                     async.eachSeries(products, (item,callback)=>{
+                            Product.update(
+                                {_id:item.id},
+                                {$inc:{
+                                    "sold": item.quantity
+                                }},
+                                {new:false},
+                                callback
+                            )
+                     }, (err)=>{
+                            if(err) return res.json({success:false,err})
+                            res.status(200).json({success:true, cart: user.cart, cartDetail:[]})
+                     })
+
+                })
+
+            }
+    )
+
 })
 
 

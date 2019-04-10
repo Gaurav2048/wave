@@ -7,7 +7,7 @@ import faFrown from '@fortawesome/fontawesome-free-solid/faFrown';
 import faSmile from '@fortawesome/fontawesome-free-solid/faSmile';
 
 import UserProductBlock from '../../utils/user/ProductBlock';
-import { getCartItems, removeCartAction } from '../../actions/user_action';
+import { getCartItems, removeCartAction,onSuccessBuy } from '../../actions/user_action';
 
 import Paypal from '../../utils/Paypal'; 
 
@@ -63,10 +63,19 @@ class userCart extends Component {
     }
 
     transactionSuccess =(data)=>{
-        this.setState({
-          showTotal: false,
-          showSuccess:true
+        this.props.dispatch(onSuccessBuy({
+            cartDetail:this.props.user.cartDetail,
+            paymentData:data
+        })).then(()=>{
+            if(this.props.user.successBuy){
+                this.setState({
+                    showTotal: false,
+                    showSuccess:true
+                  })
+            } 
         })
+        
+        
     }
 
     transactionCanceled =(data)=>{

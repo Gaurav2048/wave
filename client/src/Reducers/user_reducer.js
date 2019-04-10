@@ -1,4 +1,4 @@
-import { LOGIN_USER, REGISTER_USER,AUTH_USER,LOGOUT_USER, ADD_TO_CART_USER,GET_CART_ITEMS_USER,REMOVE_CART_ITEM_USER } from "../actions/types";
+import { LOGIN_USER, REGISTER_USER,AUTH_USER,LOGOUT_USER, ADD_TO_CART_USER,GET_CART_ITEMS_USER,ONSUCCESS_BUY_USER,REMOVE_CART_ITEM_USER } from "../actions/types";
  
 
 export default function(state={}, action){
@@ -19,6 +19,16 @@ export default function(state={}, action){
                 return {...state, userData: {
                     ...state.userData,cart:  action.payload
                 }}        
+
+        case ONSUCCESS_BUY_USER: 
+                return {...state,successBuy:action.payload.success
+                                    , userData:{
+                                        ...state.userData,
+                                        cart:action.payload.cart
+                                    },
+                                    cartDetail:action.payload.cartDetail
+                }         
+
 
         case REMOVE_CART_ITEM_USER: 
                     return {...state,
