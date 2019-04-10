@@ -9,7 +9,7 @@ import faSmile from '@fortawesome/fontawesome-free-solid/faSmile';
 import UserProductBlock from '../../utils/user/ProductBlock';
 import { getCartItems, removeCartAction } from '../../actions/user_action';
 
-
+import Paypal from '../../utils/Paypal'; 
 
 class userCart extends Component {
 
@@ -56,6 +56,21 @@ class userCart extends Component {
             total,
             showTotal: true
         })
+    }
+
+    transactionError=(data)=>{
+
+    }
+
+    transactionSuccess =(data)=>{
+        this.setState({
+          showTotal: false,
+          showSuccess:true
+        })
+    }
+
+    transactionCanceled =(data)=>{
+
     }
 
        showNullItem =()=>(
@@ -106,7 +121,10 @@ class userCart extends Component {
             {
                 this.state.showTotal ?          
                     <div className="payal_button_container">
-                            Paypal
+                            <Paypal toPay={this.state.total} 
+                            transactionError={(data)=>this.transactionError(data)} 
+                            transactionCanceled={(data)=>this.transactionCanceled(data)} 
+                            onSuccess = {(data)=>this.transactionSuccess(data)} />
                     </div>
 
                 : null
